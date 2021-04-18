@@ -32,7 +32,7 @@ const checkIndex = (data,id) =>{
 }
 
 
-const addUser = (req, res) => {
+const addUser = (req, res,next) => {
 
     const id = generateUniqueId();
 
@@ -41,9 +41,6 @@ const addUser = (req, res) => {
     fs.readFile('users.json', (error, data) => {
         data = JSON.parse(data)
         data.push({ id: id, name: name, cash: 0, credit: 0 })
-
-        console.log(data)
-
         fs.writeFile('users.json', JSON.stringify(data), err => console.log(err))
 
     })
@@ -189,28 +186,14 @@ const TransferringCash = (req,res) =>{
 
 
 const getAllUsers = (req,res) =>{
-
+   
     fs.readFile('users.json',(error,data)=>{
         data = JSON.parse(data)
-        res.write('<h1> All Users </h1>')
         
-        data.forEach(p =>{
-            res.write('<div>')
-            res.write(`<p>  <b>  ID :  </b>  ${p.id}  , <b> NAME : </b> ${p.name}  ,  <b>  CASH : </b> ${p.cash}   ,   <b> CREDIT : </b>  ${p.credit} </p>`)
-            res.write('<div>')
-        })
+       return res.json(data)
 
+       
         
-        res.write('<h2>methods</h2>')
-        res.write('<h3>Get All Users -> Routh -> /</h3>')
-        res.write('<h3>Add User -> Routh -> /add , body -> name , method -> post</h3>')
-        res.write('<h3>Depositing -> Routh -> /Depositing/:id , body -> cash , method -> post</h3>')
-        res.write('<h3>updatingCredit -> Routh -> /credit/:id , body -> credit , method -> post</h3>')
-        res.write('<h3>withdrawCash -> Routh -> /withdraw/:id , body -> cash , method -> post</h3>')
-        res.write('<h3>TransferringCash -> Routh -> /transferring/:id1/:id2 , body -> cash , method -> post</h3>')
-        
-        res.end()
-
 
     })
 

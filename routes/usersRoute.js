@@ -1,15 +1,13 @@
-const { static } = require('express')
+
 const express = require('express')
 const  userController = require('../controllers/userController')
 
 const router = express.Router()
 
 
-
 router.get('/',userController.getAllUsers)
 
 router.get('/user/:id',userController.getUser)
-
 
 router.post('/add',userController.addUser)
 
